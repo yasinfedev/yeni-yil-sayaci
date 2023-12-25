@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="lib/style.css">
+    <script src="lib/script.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <style>
+
+      body {
+        background-color: black;
+      }
+        span {
+          font-weight: bold;
+          font-size: 48px;
+          color: red;
+        }
+
+      .card-header {
+        color: white;
+        font-weight: bold;
+      }
+
+    .container {
+      margin-top: 20px;
+    }
+
+        .hidden {
+            display: none;
+        }
+
+   
+    </style>
+</head>
+<body>
+   
+    <div class="container">
+        <div class="card">
+            <div class="card-header bg-danger">Ne kadar kaldı?</div>
+            <div class="card-body">
+                <div id="mesaj1" class="alert alert-danger" role="alert">
+                    <b>"Seneye görüşürüz"</b> esprisini yapmak için kalan zamanınız:
+                </div><hr>
+                <div id="counter" class="text-center">
+                    <span id="gun"></span> gün
+                    <span id="saat"></span> saat
+                    <span id="dakika"></span> dakika
+                    <span id="saniye"></span> saniye
+                </div><hr>
+                <div id="hiddenMessage" class="hidden alert alert-info" role="alert">
+            Hala birine bu espiriyi yapmadın mı?
+        </div>
+            </div>
+        </div>
+        
+
+    </div>
+
+    <script>
+        // Yeni yılın tarihini oluştur
+        var yeniYilTarihi = new Date("January 1, 2024 00:00:00").getTime();
+
+        // 5 saniye sonra mesajı göster
+        setTimeout(function () {
+            document.getElementById("hiddenMessage").classList.remove("hidden");
+        }, 5000);
+
+      setTimeout(function () {
+            document.getElementById("hiddenMessage").innerHTML = "Bak süre daralıyor, haydi sallanma!";
+        }, 10000);
+
+
+        // Her saniyede bir geri sayım güncelleme fonksiyonunu çağır
+        var geriSayim = setInterval(function () {
+            // Şu anki tarihi al
+            var simdikiTarih = new Date().getTime();
+
+            // Kalan zamanı hesapla
+            var kalanZaman = yeniYilTarihi - simdikiTarih;
+
+            // Gün, saat, dakika ve saniye hesaplamaları
+            var gun = Math.floor(kalanZaman / (1000 * 60 * 60 * 24));
+            var saat = Math.floor((kalanZaman % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var dakika = Math.floor((kalanZaman % (1000 * 60 * 60)) / (1000 * 60));
+            var saniye = Math.floor((kalanZaman % (1000 * 60)) / 1000);
+
+            // HTML'e değerleri yaz
+            document.getElementById("gun").innerHTML = gun;
+            document.getElementById("saat").innerHTML = saat;
+            document.getElementById("dakika").innerHTML = dakika;
+            document.getElementById("saniye").innerHTML = saniye;
+
+            // Eğer geri sayım tamamlandıysa mesajı göster ve geri sayımı durdur
+            if (kalanZaman < 0) {
+                clearInterval(geriSayim);
+                document.getElementById("counter").innerHTML = "Yeni yılınız kutlu, mutlu, sağlıklı ve umutlu olsun!";
+            }
+
+           
+        }, 1000); // Her 1000 milisaniyede bir (her saniye) güncelle
+    </script>
+</body>
+</html>
